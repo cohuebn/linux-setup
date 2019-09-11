@@ -1,12 +1,17 @@
 [alias]
     co = checkout
-    ci = commit
-    br = branch
-    st = status
-    di = diff
-    branch-name = "!git rev-parse --abbrev-ref HEAD"
-    put = "!git push -u origin $(git branch-name)"
-    rhu = "!git reset --hard origin/$(git branch-name)"
+	ci = commit
+	br = branch
+	st = status
+	di = diff
+	branch-name = "!git rev-parse --abbrev-ref HEAD"
+	put = "!git push -u origin $(git branch-name)"
+	rhu = "!git reset --hard origin/$(git branch-name)"
+	completed = "!git branch --merged=develop | grep -v master | grep -v develop"
+	tidy = "!git remote prune origin && git completed && git branch -d $(git completed)"
+	d-tag = !sh -c 'git tag -d $1 && git push origin :refs/tags/$1' -
+	d-br = !sh -c 'git br -d $1 && git push origin :$1' -
+	mv-tag = !sh -c 'git d-tag $1 && git tag $1' -
 [user]
 	name = Cory Huebner
 	email = chuebner86@gmail.com
